@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"github.com/algorithm/sort"
 	"math/rand"
 	"testing"
@@ -51,7 +52,7 @@ func BenchmarkMergeSort(b *testing.B) {
 func getRandomNumbers() []int {
 	numbers := make([]int, 0, 1000000)
 	rand.Seed(time.Now().Unix())
-	for i := 0; i < 1000000; i++ {
+	for i := 0; i < 100000; i++ {
 		numbers = append(numbers, rand.Intn(100000))
 	}
 
@@ -65,4 +66,13 @@ func testSort(numbers []int) bool {
 		}
 	}
 	return true
+}
+
+func BenchmarkHeapSort(b *testing.B) {
+	numbers:=getRandomNumbers()
+	sort.HeapSort(numbers)
+	fmt.Println(numbers)
+	if testSort(numbers) == false {
+		b.Log("sort failed")
+	}
 }
